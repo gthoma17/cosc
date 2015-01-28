@@ -177,6 +177,14 @@ int quadratic(double a, double b, double c, double *solution1, double *solution2
 	}
 	return 1;
 }
+int factorial(int n){
+	if(1==n){
+		return 1;
+	}
+	else{
+		return n*factorial(n-1);
+	}
+}
 
 piHelper(){
 	int n;
@@ -236,7 +244,13 @@ quadraticHelper(){
 		printf("Given inputs will not produce a real output\n");
 	}
 }
-factorialHelper(){}
+factorialHelper(){
+	int n;
+	printf("What is N?\n");
+	scanf("%d",&n);
+
+	printf("The answer is: %d\n", factorial(n));
+}
 countFileHelper(){}
 sortFileHelper(){}
 stuentFileHelper(){}
