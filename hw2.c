@@ -1,6 +1,8 @@
-#include<stdio.h>
-#include<string.h>
-#include<float.h>
+#include <stdio.h>
+#include <string.h>
+#include <float.h>
+#include <math.h>
+
 
 /*
 TODO:
@@ -9,7 +11,7 @@ TODO:
 #3	- primes 			DONE
 #4	- student score		DONE
 #5	- tax 				DONE
-#6	- quadratic 		
+#6	- quadratic 		DONE
 #7	- factorial 		
 #8	- file info 		
 #9	- sort file 		
@@ -162,6 +164,19 @@ double compute_tax(int income, char *status, char state){
 	printf("Your taxRate is: %f\n", taxRate);
 	return income*taxRate;
 }
+int quadratic(double a, double b, double c, double *solution1, double *solution2){
+	if ((pow(b,2)-(4*a*c))<0){
+		return 0;
+	}
+	else{
+		*solution1 = (-b + (sqrt((pow(b,2)-(4*a*c))))) / (2*a);
+		*solution2 = (-b - (sqrt((pow(b,2)-(4*a*c))))) / (2*a);
+		//*solution1 = 5.0;
+		//*solution2 = 6.0;
+
+	}
+	return 1;
+}
 
 piHelper(){
 	int n;
@@ -202,7 +217,25 @@ taxHelper(){
 
 	compute_tax(income, status, state);
 }
-quadraticHelper(){}
+quadraticHelper(){
+	double a, b, c, solution1, solution2;
+
+	printf("What is A?\n");
+	scanf("%lf",&a);
+
+	printf("What is B?\n");
+	scanf("%lf",&b);
+
+	printf("What is C?\n");
+	scanf("%lf",&c);
+
+	if(quadratic(a,b,c,&solution1,&solution2)){
+		printf("Solutions: %f %f\n",solution1,solution2);
+	}
+	else{
+		printf("Given inputs will not produce a real output\n");
+	}
+}
 factorialHelper(){}
 countFileHelper(){}
 sortFileHelper(){}
