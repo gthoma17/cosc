@@ -25,9 +25,13 @@ TODO:
 main(){
 	int selection;
     do{
+		//print the menu
     	printMenu();
+		//get user selection
     	scanf("%d", &selection);
+		//parse their selection
     	parseSelection(selection);
+	//break on 11
     } while(selection != 11);   
 }
 
@@ -68,9 +72,11 @@ double compute_pi(int n){
 	int i;
 	for (i = 1; i < n; ++i){
 		if (0 == i%2){
+		//even numbers are added
 			correction = correction + (1.0/((i*2)+1));
 		}
 		else{
+		//odd numbers are subtracted
 			correction = correction - (1.0/((i*2)+1));
 		}
 	}
@@ -118,9 +124,10 @@ void process_scores(){
 
 	gets(line);
 	gets(line);
-	/*^^^^^^^^^kluge*/
+	/*^^^^^^^^^cygwin kluge*/
 	sscanf(line, "%s %lf", &thisName, &thisScore);
 	while(strcmp(thisName,"q") != 0 && strcmp(thisName,"Q") != 0){
+		//read scores until user says 'q'
 		if (thisScore > maxScore){
 			maxScore = thisScore;
 			strcpy(maxName,thisName);
@@ -141,22 +148,25 @@ void process_scores(){
 double compute_tax(int income, char *status, char state){
 	double taxRate;
 
-	if(income < 0){return -1.0;}
-
+	if(income < 0){return -1.0;} //error check
+	
 	if (strcmp(status,"married")==0 || strcmp(status,"MARRIED")==0){
+		//married people
 		if (income < 50000){taxRate = 10;}
 		else{taxRate = 15;}
 	}
 	else if (strcmp(status,"single")==0 || strcmp(status,"SINGLE")==0){
+		//all the single ladies
 		if (income < 30000){taxRate = 20;}
 		else{taxRate = 25;}
 	}
 	else{
+		//error check
 		printf("invalid status: %s\n", status);
 		return -1.0;
 	}
 
-	if ('O' == state || 'o' == state){taxRate=taxRate-3;}
+	if ('O' == state || 'o' == state){taxRate=taxRate-3;}//correct for out of state
 	else if ('I' == state || 'i' == state){;}
 	else{
 		printf("invalid state: %c\n", &state);
@@ -186,11 +196,11 @@ int factorial(int n){
 void file_count(char *file, int *characters, int *lines){
 	FILE *fp = fopen(file,"r");
 	char thisChar;
-	if(fp){
+	if(fp){ //if file is there
 		*characters = 0;
 		*lines = 1;
-		while((thisChar = getc(fp)) != EOF){
-			*characters = *characters + 1;
+		while((thisChar = getc(fp)) != EOF){ //count character by character
+			*characters = *characters + 1;  
 			if(thisChar == '\n'){
 				*lines = *lines + 1;
 			}
@@ -208,7 +218,7 @@ void file_sort(char *infile, char *outfile){
 	FILE *fout = fopen(outfile,"w");
 	char buf[256];
 
-	if(fin){
+	if(fin){ //if file is there
 		fgets(buf, sizeof(buf), fin);
 		int length = buf[0] - '0';
 
@@ -252,11 +262,6 @@ void file_sort(char *infile, char *outfile){
 			}
 		}
 		//write to output file
-		for (i = 0; i < length; ++i){
-			printf("%d\t", student_numbers[i]);
-			printf("%s\t", student_grades[i]);
-			printf("%s\n", student_gpas[i]);
-		}
 		if(fout){
 			for (i = 0; i < length; ++i){
 				fprintf(fout, "%d\t", student_numbers[i]);
