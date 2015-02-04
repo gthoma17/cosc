@@ -2,6 +2,7 @@
 #include <string.h>
 #include <float.h>
 #include <math.h>
+#include <stdlib.h>
 
 
 /*
@@ -15,7 +16,7 @@ TODO:
 #7	- factorial 		DONE
 #8	- file info 		DONE
 #9	- sort file 		DONE
-#10	- student file 		
+#10	- student file 		DONE
 #11	- menu 				DONE
 
 
@@ -274,9 +275,89 @@ void file_sort(char *infile, char *outfile){
 	}
 	//local variables are automatically freed when function ends
 }
+typedef struct{
+	char name[80];
+	int age;
+	double gpa;
+}student;
 void file_student(char *infile){
+	FILE *fin = fopen(infile,"r");
+	char buf[256];
 
+	if(fin){
+		fgets(buf, sizeof(buf), fin);
+		int length = buf[0] - '0';
+		int i,j,k;
+		student *students;
+		students = (student*) malloc(sizeof(student)*length);
+
+		for (i=0; i < length; ++i){
+			fgets(buf, sizeof(buf),fin);
+			//now seperate out the different fields
+			//name
+			char *token=strtok(buf, " \t");
+			strcpy(students[i].name,token);
+			//age
+			token = strtok(NULL, " \t");
+			students[i].age = atoi(token);
+			//gpa
+			token = strtok(NULL, " \t\n");
+			students[i].gpa = atof(token);
+		}
+		//print avg gpa
+		double total_gpa = 0;
+		for (i=0; i < length; ++i){
+			total_gpa = total_gpa + students[i].gpa;
+		}
+		printf("Average gpa: %f\n\n", total_gpa/length);
+
+		//print students with gpa > 2
+		printf("The following students have a GPA >= 2.0\n");
+		for (i=0; i < length; ++i){
+			if(2.0<=students[i].gpa){
+				printf("%s\n",students[i].name);
+			}
+		}
+		printf("Congratulations!\n\n");
+
+		printf("All student info: \n");
+		//students & info in alphabetic order
+		char smallest_name[80];
+		int smallest_index;
+		for(j=0; j<length; ++j){
+			//find the first name we havn't printed yet
+			for(k=0;k<length;++k){
+				if(students[k].name[0] != '\0'){
+					strcpy(smallest_name, students[k].name);
+					smallest_index = k;
+					break;
+				}
+			}
+			//compare it to all other names we havn't printed
+			for(i=0; i<length; ++i){
+				if(students[i].name[0] != '\0'){
+					if ((strcmp(smallest_name, students[i].name)) > 0){
+						strcpy(smallest_name, students[i].name);
+						smallest_index = i;
+					}
+				}
+			}
+			printf("%s\t", students[smallest_index].name);
+			printf("%d\t", students[smallest_index].age);
+			printf("%f\n", students[smallest_index].gpa);
+			students[smallest_index].name[0] = '\0';
+		}
+
+
+
+		free(students);
+	}
+	else{
+		printf("Invalid input file name\n");
+	}
+	//local variables are automatically freed when function ends
 }
+
 piHelper(){
 	int n;
 	printf("How many terms worth of precision do you want?\n");
@@ -370,6 +451,6 @@ stuentFileHelper(){
 	printf("Where is your in file?\n");
 	scanf("%s",infile);
 
-	file_sort(infile);
+	file_student(infile);
 }
 
