@@ -36,7 +36,8 @@
 .LSOverride
 
 # Icon must end with two \r
-Icon
+Icon
+
 
 # Thumbnails
 ._*
@@ -70,3 +71,9 @@ $RECYCLE.BIN/
 *.msi
 *.msm
 *.msp
+
+# Test files
+test/
+
+# Weird option file that won't go away
+option.

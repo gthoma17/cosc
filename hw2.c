@@ -12,9 +12,9 @@ TODO:
 #4	- student score		DONE
 #5	- tax 				DONE
 #6	- quadratic 		DONE
-#7	- factorial 		
-#8	- file info 		
-#9	- sort file 		
+#7	- factorial 		DONE
+#8	- file info 		DONE
+#9	- sort file 		DONE
 #10	- student file 		
 #11	- menu 				DONE
 
@@ -171,9 +171,6 @@ int quadratic(double a, double b, double c, double *solution1, double *solution2
 	else{
 		*solution1 = (-b + (sqrt((pow(b,2)-(4*a*c))))) / (2*a);
 		*solution2 = (-b - (sqrt((pow(b,2)-(4*a*c))))) / (2*a);
-		//*solution1 = 5.0;
-		//*solution2 = 6.0;
-
 	}
 	return 1;
 }
@@ -185,7 +182,101 @@ int factorial(int n){
 		return n*factorial(n-1);
 	}
 }
+void file_count(char *file, int *characters, int *lines){
+	FILE *fp = fopen(file,"r");
+	char thisChar;
+	if(fp){
+		*characters = 0;
+		*lines = 1;
+		while((thisChar = getc(fp)) != EOF){
+			*characters = *characters + 1;
+			if(thisChar == '\n'){
+				*lines = *lines + 1;
+			}
+		}
+		fclose(fp);
+	}
+	else{
+		*characters = -1;
+		*lines = -1;
+		printf("Invalid file name\n");
+	}
+}
+void file_sort(char *infile, char *outfile){
+	FILE *fin = fopen(infile,"r");
+	FILE *fout = fopen(outfile,"w");
+	char buf[256];
 
+	if(fin){
+		fgets(buf, sizeof(buf), fin);
+		int length = buf[0] - '0';
+
+		int student_numbers[length];
+		char student_grades[length][3]; //grade should consume at most 2 chars
+		char student_gpas[length][20];  
+		int i,j,number_temp;
+		char grade_temp[3];
+		char gpa_temp[20];
+
+		for (i=0; i < length; ++i){
+			fgets(buf, sizeof(buf),fin);
+			//now seperate out the different fields
+			//student number
+			char *token=strtok(buf, " \t");
+			student_numbers[i] = atoi(token);
+			//grade
+			token = strtok(NULL, " \t");
+			strcpy(student_grades[i],token);
+			//gpa
+			token = strtok(NULL, " \t\n");
+			strcpy(student_gpas[i],token);
+		}
+		//bubble sort becasue why not
+		for (i=1;i<length;++i){
+			for(j=0;j<length-i;++j){
+				if(student_numbers[j] > student_numbers[j+1]){
+					//number
+					number_temp = student_numbers[j];
+					student_numbers[j] = student_numbers[j+1];
+					student_numbers[j+1] = number_temp;
+					//grade
+					strcpy(grade_temp,student_grades[j]);
+					strcpy(student_grades[j],student_grades[j+1]);
+					strcpy(student_grades[j+1],grade_temp);
+					//gpa
+					strcpy(gpa_temp,student_gpas[j]);
+					strcpy(student_gpas[j],student_gpas[j+1]);
+					strcpy(student_gpas[j+1],gpa_temp);
+				}
+			}
+		}
+		//write to output file
+		for (i = 0; i < length; ++i){
+			printf("%d\t", student_numbers[i]);
+			printf("%s\t", student_grades[i]);
+			printf("%s\n", student_gpas[i]);
+		}
+		if(fout){
+			for (i = 0; i < length; ++i){
+				fprintf(fout, "%d\t", student_numbers[i]);
+				fprintf(fout, "%s\t", student_grades[i]);
+				fprintf(fout, "%s\n", student_gpas[i]);
+			}
+			fclose(fout);
+		}
+		else{
+			printf("Invalid output file\n");
+		}
+		fclose(fin);
+	}
+	else{
+		printf("Invalid input file name\n");
+	}
+	//local variables are automatically freed when function ends
+}
+void file_student(char *infile){
+
+}
 piHelper(){
 	int n;
 	printf("How many terms worth of precision do you want?\n");
@@ -251,7 +342,34 @@ factorialHelper(){
 
 	printf("The answer is: %d\n", factorial(n));
 }
-countFileHelper(){}
-sortFileHelper(){}
-stuentFileHelper(){}
+countFileHelper(){
+	int characters, lines;
+	char filename[81];
+
+	printf("Where is your file?\n");
+	scanf("%s",filename);
+
+	file_count(filename,&characters,&lines);
+
+	printf("total chars: %d\n", characters);
+	printf("total lines: %d\n", lines);
+}
+sortFileHelper(){
+	char infile[81], outfile[81];
+
+	printf("Where is your in file?\n");
+	scanf("%s",infile);
+	printf("Where is your outfile file (does not need to exist already)?\n");
+	scanf("%s",outfile);
+
+	file_sort(infile, outfile);
+}
+stuentFileHelper(){
+	char infile[81];
+
+	printf("Where is your in file?\n");
+	scanf("%s",infile);
+
+	file_sort(infile);
+}
 
