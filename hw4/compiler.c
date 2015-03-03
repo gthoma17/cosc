@@ -13,7 +13,8 @@ typedef enum
 	MAIN, LBRACKET, RBRACKET, READ, COMMA, 
 	WRITE, IF, ELSE, WHILE, LPAREN, RPAREN, 
 	ASSIGNOP, ADDOP, MULOP, SUBOP, DIVOP, 
-	SEMICOLON, ID, INTLITERAL, SCANEOF
+	SEMICOLON, ID, INTLITERAL, SCANEOF, GT, 
+	GTE, LT, LTE, EQUAL, NOTEQ
 } token;
 
 /*functions declarations related to scanner*/ 
@@ -85,6 +86,46 @@ token scanner()
           }
           ungetc(c, fin);          /*put back the last character read*/ 
           return INTLITERAL;       /*return integer literal*/
+      }
+      else if (c == '>'){   /*GT or GTE*/ 
+          c = getc(fin);
+          if(c == '='){
+                return GTE;
+          }
+          else{
+                ungetc(c, fin); 
+                return GT;
+            }
+      }      
+      else if (c == '<'){   /*LT or LTE*/ 
+          c = getc(fin);
+          if(c == '='){
+                return LTE;
+          }
+          else{
+                ungetc(c, fin); 
+                return LT;
+            }
+      }
+      else if (c == '='){   /*possible equal*/ 
+          c = getc(fin);
+          if(c == '='){
+                return EQUAL;
+          }
+          else{
+                ungetc(c, fin); 
+                lexical_error();
+            }
+      }
+      else if (c == '!'){   /*not equal*/ 
+          c = getc(fin);
+          if(c == '='){
+                return NOTEQ;
+          }
+          else{
+                ungetc(c, fin); 
+                lexical_error();
+            }
       }
       else if (c == '(')   /*left parentheses*/ 
           return LPAREN;
@@ -238,6 +279,12 @@ const char* intToToken(token thisToken){
 		case ID: 		return "ID";
 		case INTLITERAL: return "INTLITERAL";
 		case SCANEOF: 	return "SCANEOF";
+		case GT:	 	return "GT";
+		case GTE:	 	return "GTE";
+		case LT:	 	return "LT";
+		case LTE:	 	return "LTE";
+		case EQUAL: 	return "EQUAL";
+		case NOTEQ: 	return "NOTEQ";
 	}
 }
 
@@ -246,6 +293,6 @@ printTokens(){
 	do{
 		thisToken = scanner();
 		printf("%s\n", intToToken(thisToken));
-	}while(SCANEOF != thisToken);
+	}while(SCANEOF != thisToken && TRUE != error);
 }
 parseFile(){}
