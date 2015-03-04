@@ -39,20 +39,26 @@ void syntax_error();
 void arithop();
 void operand();
 void relop();
-const char* intToToken();
+
+//funtion declarations related to user interface
+int main();
+void printMenu();
+void parseSelection(int selection);
+const char* intToToken(token thisToken);
+void printTokens();
+void parseFile();
 
 /*global variables*/
 FILE *fin;         /*source file*/
+FILE *fout;        // output file
 token next_token;  /*next token in source file*/
 char token_buffer[100]; /*token buffer*/
 int token_ptr;     /*buffer pointer*/
 int line_num = 1;  /*line number in source file*/
 int error = FALSE; /*flag to indicate error*/
-/************************************************************************/
 
-/*returns next token from source file*/ 
-token scanner()
-{
+//Scanner (tokenizer) functions------------------------------------------------
+token scanner(){ //returns next token from source file
    char c;               /*current character in source file*/ 
 
    clear_buffer();      /*empty token buffer*/
@@ -186,8 +192,7 @@ token scanner()
        }
    }
 }
-token check_reserved()
-{    
+token check_reserved(){
      if(strcmp(token_buffer, "main") == 0)             /*six reserved words*/
          return MAIN;
      else if(strcmp(token_buffer, "read") == 0) 
@@ -203,15 +208,11 @@ token check_reserved()
      else                                              /*identifier*/
          return ID;
 }
-/*clears the buffer*/ 
-void clear_buffer()
-{
+void clear_buffer(){//clears the buffer 
      token_ptr = 0;                         /*reset token pointer*/ 
      token_buffer[token_ptr] = '\0';        /*add null character*/
 }
-/*appends the character to buffer*/ 
-void buffer_char(char c)
-{
+void buffer_char(char c){//appends the character to buffer 
      token_buffer[token_ptr] = c;            /*append current character*/
      token_ptr = token_ptr + 1;             /*move token pointer*/
      token_buffer[token_ptr] = '\0';        /*move null character*/
@@ -220,33 +221,19 @@ void lexical_error(){
 	error = TRUE;
 	printf("Lexical Error on line %d\n", line_num);
 }
-void match(token tok)
-{
-   if(tok == next_token) /*expected token and actual token match*/
-       ;
-   else
-       syntax_error();   /*expected token and actual token do not match*/
-   //printf("current token: %s   line: %d\n", intToToken(next_token), line_num);
-   next_token = scanner(); /*read the next token*/
-}
-void syntax_error(){
-  error = TRUE;
-  printf("Syntax Error on line %d\n", line_num);
-}
-
-void parser()
-{
+//Parser functions-------------------------------------------------------------
+void parser(){
    next_token = scanner();  /*read the first token*/ 
    program();               /*parse the program*/ 
    match(SCANEOF);          /*check end of file*/
 }
-void program(){
+void program(){ //<program> ->  main{<statement_list>}
     match(MAIN);
     match(LBRACKET);
     statement_list();
     match(RBRACKET);
 }
-void statement_list(){
+void statement_list(){ //<statement_list> ->  <statement>[<statement>]
     statement();
     while(TRUE){
       if (next_token == ID ||
@@ -261,28 +248,28 @@ void statement_list(){
       }
     }
 }
-void statement(){
+void statement(){ //<statement> ->  <assignment>|<read>|<write>|<if-else>|<while>
   if (next_token == ID){ //assignment
     match(ID);
     match(ASSIGNOP);
     expression();
     match(SEMICOLON);
   }
-  else if (next_token == READ){
+  else if (next_token == READ){ //<read>  ->  read(<id_list>);
     match(READ);
     match(LPAREN);
     id_list();
     match(RPAREN);
     match(SEMICOLON);
   }
-  else if (next_token == WRITE){
+  else if (next_token == WRITE){ //write(<id_list>);
     match(WRITE);
     match(LPAREN);
     id_list();
     match(RPAREN);
     match(SEMICOLON);
   }
-  else if (next_token == IF){
+  else if (next_token == IF){ //<if-else> ->  if(<boolean>){<statement_list>}[else{<statement_list>}]
     match(IF);
     match(LPAREN);
     boolean();
@@ -297,7 +284,7 @@ void statement(){
       match(RBRACKET);
     }
   }
-  else if (next_token == WHILE){
+  else if (next_token == WHILE){ //while(<boolean>){<statement_list>}
     match(WHILE);
     match(LPAREN);
     boolean();
@@ -309,7 +296,7 @@ void statement(){
   else                              /*invalid beginning of statement*/
     syntax_error();
 }
-void expression(){
+void expression(){ //<expression> ->  <term>[<arithop><term>]
   term();
   while(TRUE){
       if (next_token == ADDOP ||
@@ -324,7 +311,7 @@ void expression(){
       }
     }
 }
-void id_list(){
+void id_list(){ //<id_list> ->  <identifier>[,<identifier>]
   match(ID);
   while(TRUE){
       if (next_token == COMMA){
@@ -336,7 +323,7 @@ void id_list(){
       }
     }
 }
-void term(){
+void term(){ //<term> ->  <identifier>|<number|(<expression>)
   if (next_token == ID){
     match(ID);
   }
@@ -351,12 +338,12 @@ void term(){
   else
     syntax_error();
 }
-void boolean(){
+void boolean(){ //<boolean> ->  <operand><relop><operand>
   operand();
   relop();
   operand();
 }
-void arithop(){
+void arithop(){ //<arithop> ->  *|/|+|-
   if (next_token == ADDOP){
     match(ADDOP);
   }
@@ -372,7 +359,7 @@ void arithop(){
   else
     syntax_error();
 }
-void operand(){
+void operand(){ //<operand> ->  <identifier>|<number>
   if (next_token == ID){
     match(ID);
   }
@@ -382,7 +369,7 @@ void operand(){
   else
     syntax_error();
 }
-void relop(){
+void relop(){ //<relop> ->  <|>|<=|>=|==|!=
   if (next_token == GT){
     match(GT);
   }
@@ -404,19 +391,33 @@ void relop(){
   else
     syntax_error();
 }
-main(){
-  int selection;
-    do{
-    //print the menu
-      printMenu();
-    //get user selection
-      scanf("%d", &selection);
-    //parse their selection
-      parseSelection(selection);
-  //break on 3
-    } while(selection != 3); 
+void syntax_error(){
+  error = TRUE;
+  printf("Syntax Error on line %d\n", line_num);
 }
-printMenu(){
+void match(token tok){
+   if(tok == next_token) /*expected token and actual token match*/
+       ;
+   else
+       syntax_error();   /*expected token and actual token do not match*/
+   next_token = scanner(); /*read the next token*/
+}
+
+//Menu interface functions-----------------------------------------------------
+int main(){
+  int selection;
+  do{
+  //print the menu
+    printMenu();
+  //get user selection
+    scanf("%d", &selection);
+  //parse their selection
+    parseSelection(selection);
+  //break on 3
+  } while(selection != 3); 
+  return 0;
+}
+void printMenu(){
   char *menuText = 
     "Please select from the following options:\n"
     "1  - Write tokens to a file\n"
@@ -424,7 +425,7 @@ printMenu(){
     "3  - quit\n";
   printf("%s", menuText);
 }
-parseSelection(int selection){
+void parseSelection(int selection){
   if (1 == selection) 
     printTokens();
   else if(2 == selection)
@@ -464,29 +465,33 @@ const char* intToToken(token thisToken){
     case NOTEQ:   return "NOTEQ";
   }
 }
-
-printTokens(){
+void printTokens(){
   char infile[81], outfile[81];
+  token thisToken;
+  error = FALSE;
 
   printf("Where is your input file?\n");
   scanf("%s",infile);
-  FILE *fin = fopen(infile,"r");
+  fin = fopen(infile,"r");
 
   printf("Where is your outfile file (does not need to exist already)?\n");
   scanf("%s",outfile);
-  FILE *fout = fopen(outfile,"w");
-  token thisToken;
+  fout = fopen(outfile,"w");
 
   do{
     thisToken = scanner();
+    printf("%s\n", intToToken(thisToken));
     fprintf(fout, "%s\n", intToToken(thisToken));
   }while(SCANEOF != thisToken && TRUE != error);
+
+  fclose(fout);
+  fclose(fin);
 }
-parseFile(){
+void parseFile(){
   char infile[81];
   printf("Where is your input file?\n");
   scanf("%s",infile);
-  FILE *fin = fopen(infile,"r");
+  fin = fopen(infile,"r");
   error = FALSE;
   parser();
   if (FALSE == error){
