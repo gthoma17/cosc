@@ -1,0 +1,44 @@
+main{
+	a := 1; 		//test assignments
+	a := b;
+	a := b+2;
+	a := 3*2;
+	a := b/2;
+	a := 3-2;
+	a := b+2*4;
+	a := 3*2/c;
+	a := b/2+6;
+	a := 3-2-7;
+	a := b+2*4-(7*2);
+	a := 3*2/c*(7-2);
+	a := b/2+6+(7+2);
+	a := 3-2-7/(7/2);
+	read(a);		//test read
+	read(a,b,c);
+	write(a);		//test write
+	write(a,b,c);
+	if(a>b){
+		a := 5;
+	}
+	if(a<6){
+		read(b);
+	}
+	else{
+		write(q);
+	}
+	if(a >= b){
+		while(a>5){
+			write(r);
+		}
+	}
+	while( a<=5){
+		a :=6;
+	}
+	while(y != t){
+		write(h);
+	}
+	while(q == q){
+		read(u);
+	}
+	
+}
