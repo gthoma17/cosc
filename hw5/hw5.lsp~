@@ -11,7 +11,7 @@
   )
 )
 (defun primep (n1 n2)
-  (cond((= 1 n2) T)           ;if we made it n2 == 1, it's prime
+  (cond((= 0 n2) T)           ;if we made it n2 == 1, it's prime
        ((= 0 (rem n1 n2)) nil);if it's divisible by n2, it's not prime
        (T (primep n1 (- n2 1)))
   )
@@ -69,7 +69,4 @@
                               ;if carl is in m, return it with the others
         (T (f10 (cdr L) M))   ;otherwise keep going
   )
-)
-(defun f11 (N)
-  (primep N (- N 1))
 )
