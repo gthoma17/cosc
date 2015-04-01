@@ -1,7 +1,7 @@
 #~~~~~~~~~~~TODO~~~~~~~~~~~
 #DONE	1	Quadratic
 #DONE	2	Prime
-#	3	Pi
+#DONE	3	Pi
 #DONE	4	Tax
 #	5	IdPassword
 #	6	Score
@@ -108,7 +108,10 @@ sub prime_helper {
 	&prime($num)
 }
 sub pi_helper {
-	# body...
+	print "How many terms worth of precision do you want?: ";
+	my $n = <STDIN>;
+	chomp($n)
+	&pi($n)
 }
 sub tax_helper {
 	print "Please enter income: ";
@@ -185,7 +188,22 @@ sub prime {
 		print "$num is not prime"
 	}
 }
+sub pi {
+	my $n = $_[0];
+	my $correction = 1.0;
+	my $i = 1;
+	for ($i = 1; $i < $n; $i++) {
+		if (0 == $i%2) { #evens add
 
+			$correction = $correction + (1/(($i*2)+1));
+		} else { #odds subtract
+			$correction = $correction - (1/(($i*2)+1));
+		}
+	}
+	my $approx_pi = 4.0 * $correction;
+	print "Pi is approxomately $approx_pi (correction = $correction)";
+
+}
 sub tax {
 	my $income = $_[0];
 	my $status = $_[1];
