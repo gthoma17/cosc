@@ -5,7 +5,7 @@
 #DONE	4	Tax
 #DONE	5	IdPassword
 #DONE	6	Score
-#	7	FileSort
+#DONE	7	FileSort
 #	8	Frequency
 #	9	Power
 #	10	Factorial
@@ -139,7 +139,17 @@ sub score_helper {
 	&score;
 }
 sub filesort_helper {
-	# body...
+	print "Please enter infile: ";
+	my $infile = <STDIN>;
+	print "Please enter outfile: ";
+	my $outfile = <STDIN>;
+	chomp($infile);
+	chomp($outfile);
+
+	#!!!!!NEXT TWO LINES ARE FOR TESTING ONLY
+	$infile = "7.txt";
+	$outfile = "7.out";
+	&filesort($infile, $outfile);
 }
 sub frequency_helper {
 	# body...
@@ -304,6 +314,19 @@ sub score {
 	my $average = $runningTotal / $numScores;
 	print "Average score: $average"
 }
+sub filesort {
+	open(my $ifh, "<", $_[0]);
+	my @allLines = <$ifh>;
+	my @sortedLines = sort(@allLines);
+
+	open(my $ofh, ">", $_[1]);
+	foreach my $x (@sortedLines) {
+		print $ofh "$x";
+	}
+	close($ifh);
+	close($ofh);
+}
+
 
 #now that everything is ready
 #lets get this party started
