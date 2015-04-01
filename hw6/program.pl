@@ -2,7 +2,7 @@
 #DONE	1	Quadratic
 #DONE	2	Prime
 #	3	Pi
-#	4	Tax
+#DONE	4	Tax
 #	5	IdPassword
 #	6	Score
 #	7	FileSort
@@ -111,7 +111,16 @@ sub pi_helper {
 	# body...
 }
 sub tax_helper {
-	# body...
+	print "Please enter income: ";
+	my $income = <STDIN>;
+	print "Please enter marital status (single/married): ";
+	my $status = <STDIN>;
+	print "Please enter residency (I/O): ";
+	my $residency = <STDIN>;
+	chomp($income);
+	chomp($status);
+	chomp($residency);
+	&tax($income, $status, $residency);
 }
 sub idpassword_helper {
 	# body...
@@ -174,6 +183,49 @@ sub prime {
 		print "$num is prime"
 	} else{
 		print "$num is not prime"
+	}
+}
+
+sub tax {
+	my $income = $_[0];
+	my $status = $_[1];
+	my $residency = $_[2];
+	my $errorFlag = 0;
+	my $taxRate = 0;
+	
+	#Determine base rate
+	if ("MARRIED" eq $status or "married" eq $status) {
+		if ($income < 50000) {
+			$taxRate = 0.1
+		} else {
+			$taxRate = 0.15
+		}
+	} elsif ("SINGLE" eq $status or "single" eq $status) {
+		if ($income < 30000) {
+			$taxRate = 0.2
+		} else {
+			$taxRate = 0.25
+		}
+	} else {
+		$errorFlag = 1;
+	}
+	#modify for residency 
+	if($errorFlag){
+		#pass
+	} elsif ("O" eq $residency or "o" eq $residency) {
+		$taxRate = $taxRate - 0.03
+	} elsif ("I" eq $residency or "i" eq $residency) {
+		#pass
+	} else {
+		$errorFlag = 1;
+	}
+
+	#if in error, notify the user
+	if ($errorFlag) {
+		print "One or more of your parameters is incorrect";
+	} else {
+		my $tax = $income * $taxRate;
+		print "Taxes due: $tax";
 	}
 }
 
