@@ -186,13 +186,63 @@ sub minmax_helper {
 	print &minmax(4,2,5,3,21,5,6);
 }
 sub positives_fractionals_helper {
-	# body...
+	print "Please enter infile: ";
+	my $infile = <STDIN>;
+	print "Please enter outfile for positives: ";
+	my $Poutfile = <STDIN>;
+	print "Please enter outfile for fractionals: ";
+	my $Foutfile = <STDIN>;
+	chomp($infile);
+	chomp($Poutfile);
+	chomp($Foutfile);
+
+	#!!!!!NEXT THREE LINES ARE FOR TESTING ONLY
+	$infile = "13.txt";
+	$Poutfile = "13P.out";
+	$Foutfile = "13F.out";
+	&positives($infile, $Poutfile);
+	&fractionals($infile, $Foutfile);
+
 }
 sub emuid_emuweb_helper {
-	# body...
+	print "Please enter infile: ";
+	my $infile = <STDIN>;
+	print "Please enter outfile for emuid: ";
+	my $Ioutfile = <STDIN>;
+	print "Please enter outfile for emuweb: ";
+	my $Woutfile = <STDIN>;
+	chomp($infile);
+	chomp($Ioutfile);
+	chomp($Woutfile);
+
+	#!!!!!NEXT THREE LINES ARE FOR TESTING ONLY
+	$infile = "14.txt";
+	$Poutfile = "14I.out";
+	$Foutfile = "14W.out";
+	&emuid($infile, $Poutfile);
+	&emuweb($infile, $Foutfile);
 }
 sub whitespace_areacode_helper {
-	# body...
+	print "Please enter infile for whitespace: ";
+	my $Winfile = <STDIN>;
+	print "Please enter infile for areacode: ";
+	my $Ainfile = <STDIN>;
+	print "Please enter outfile for whitespace: ";
+	my $Woutfile = <STDIN>;
+	print "Please enter outfile for areacode: ";
+	my $Aoutfile = <STDIN>;
+	chomp($Winfile);
+	chomp($Ainfile);
+	chomp($Woutfile);
+	chomp($Aoutfile);
+
+	#!!!!!NEXT THREE LINES ARE FOR TESTING ONLY
+	$Winfile = "15W.txt";
+	$Ainfile = "15A.txt";
+	$Woutfile = "15W.out";
+	$Aoutfile = "15A.out";
+	&whitespace($Winfile, $Woutfile);
+	&areacode($Ainfile, $Aoutfile);
 }
 
 sub quadratic {
@@ -395,6 +445,98 @@ sub minmax {
 	}
 	$_[1] = $min;
 	$_[2] = $max;
+}
+sub positives {
+	open(my $ifh, "<", $_[0]);
+	open(my $ofh, ">", $_[1]);
+
+	my @allLines = <$ifh>;
+
+	foreach my $x (@allLines) {
+		if ($x =~ /^[1-9][0-9]*/){
+			print $ofh $x;
+		}
+	}
+
+	close($ifh);
+	close($ofh);
+}
+sub fractionals {
+	open(my $ifh, "<", $_[0]);
+	open(my $ofh, ">", $_[1]);
+
+	my @allLines = <$ifh>;
+
+	foreach my $x (@allLines) {
+		if ($x =~ /^0\.[0-9]+/){
+			print $ofh $x;
+		}
+	}
+
+	close($ifh);
+	close($ofh);
+}
+sub emuid {
+	open(my $ifh, "<", $_[0]);
+	open(my $ofh, ">", $_[1]);
+
+	my @allLines = <$ifh>;
+
+	foreach my $x (@allLines) {
+		if ($x =~ /^(e|E)00[0-9]{5,}/){
+			print $ofh $x;
+		}
+	}
+
+	close($ifh);
+	close($ofh);
+}
+sub emuweb {
+	open(my $ifh, "<", $_[0]);
+	open(my $ofh, ">", $_[1]);
+
+	my @allLines = <$ifh>;
+
+	foreach my $x (@allLines) {
+		if ($x =~ /^www.emich.edu(\/[a-zA-Z]+)+.html/){
+			print $ofh $x;
+		}
+	}
+
+	close($ifh);
+	close($ofh);
+}
+sub whitespace {
+	open(my $ifh, "<", $_[0]);
+	open(my $ofh, ">", $_[1]);
+
+	my @allLines = <$ifh>;
+
+	foreach my $x (@allLines) {
+		if ($x =~ /^[a-zA-Z]+\s+[a-zA-Z]+/){
+			$x =~ s/\s+/ /g;
+			print $ofh "$x\n";
+		}
+	}
+
+	close($ifh);
+	close($ofh);
+}
+sub areacode {
+	open(my $ifh, "<", $_[0]);
+	open(my $ofh, ">", $_[1]);
+
+	my @allLines = <$ifh>;
+
+	foreach my $x (@allLines) {
+		if ($x =~ /^\w+ 715/){
+			$x =~ s/715/692/g;
+		}
+		print $ofh $x
+	}
+
+	close($ifh);
+	close($ofh);
 }
 #now that everything is ready
 #lets get this party started
