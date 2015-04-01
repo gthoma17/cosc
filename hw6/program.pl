@@ -6,7 +6,7 @@
 #DONE	5	IdPassword
 #DONE	6	Score
 #DONE	7	FileSort
-#	8	Frequency
+#DONE	8	Frequency
 #	9	Power
 #	10	Factorial
 #	11	Sort
@@ -152,7 +152,13 @@ sub filesort_helper {
 	&filesort($infile, $outfile);
 }
 sub frequency_helper {
-	# body...
+	print "Please enter infile: ";
+	my $infile = <STDIN>;
+	chomp($infile);
+
+	#!!!!!NEXT LINE is FOR TESTING ONLY
+	$infile = "8.txt";
+	&frequency($infile);
 }
 sub power_helper {
 	# body...
@@ -326,7 +332,23 @@ sub filesort {
 	close($ifh);
 	close($ofh);
 }
-
+sub frequency {
+	open(my $ifh, "<", $_[0]);
+	my %lnames = ();
+	my @allLines = <$ifh>;
+	foreach my $x (@allLines) {
+		my @this_arr = split(/ /, $x);
+		my $lname = @this_arr[0];
+		if(!defined($lnames{$lname})){
+			$lnames{$lname} = 1;
+		} else {
+			$lnames{$lname} = $lnames{$lname} + 1;
+		}
+	}
+	while(my ($name, $occurances) = each(%lnames)){
+		print "$name occurs $occurances times in the file\n"
+	}
+}
 
 #now that everything is ready
 #lets get this party started
