@@ -7,10 +7,10 @@
 #DONE	6	Score
 #DONE	7	FileSort
 #DONE	8	Frequency
-#	9	Power
-#	10	Factorial
-#	11	Sort
-#	12	MinMax
+#DONE	9	Power
+#DONE	10	Factorial
+#DONE	11	Sort
+#DONE	12	MinMax
 #	13	Positives/Factorials
 #	14	EmuIds/EmuWeb
 #	15	Whitespace/Areacode
@@ -171,13 +171,19 @@ sub power_helper {
 	&power($base, $power);
 }
 sub factorial_helper {
-	# body...
+	print "Please enter a number: ";
+	my $num = <STDIN>;
+	chomp($num);
+
+	my $result = &factorial($num);
+
+	print "Result: $result"
 }
 sub sort_helper {
-	# body...
+	print &my_sort(5,4,3,2,1);
 }
 sub minmax_helper {
-	# body...
+	print &minmax(4,2,5,3,21,5,6);
 }
 sub positives_fractionals_helper {
 	# body...
@@ -362,8 +368,34 @@ sub power {
 		$total = $total * $_[0];
 	}
 	print "total is $total";
+	return $total;
 }
+sub factorial {
+	my $n = $_[0];
+	if ($n == 1) {
+		return 1
+	}
+	return $n * &factorial($n - 1);
+}
+sub my_sort {
+	return sort($_);
+}
+sub minmax {
+	my $min;
+	my $max;
+	my @nums;
 
+	foreach my $x (@nums) {
+		if(!defined($min) or $x < $min){
+			$min = $x;
+		}
+		if(!defined($max) or $x < $max){
+			$max = $x;
+		}
+	}
+	$_[1] = $min;
+	$_[2] = $max;
+}
 #now that everything is ready
 #lets get this party started
 &main
