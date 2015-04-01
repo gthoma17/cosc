@@ -161,7 +161,14 @@ sub frequency_helper {
 	&frequency($infile);
 }
 sub power_helper {
-	# body...
+	print "Please enter base number: ";
+	my $base = <STDIN>;
+	print "Please enter power: ";
+	my $power = <STDIN>;
+	chomp($base);
+	chomp($power);
+
+	&power($base, $power);
 }
 sub factorial_helper {
 	# body...
@@ -348,6 +355,13 @@ sub frequency {
 	while(my ($name, $occurances) = each(%lnames)){
 		print "$name occurs $occurances times in the file\n"
 	}
+}
+sub power {
+	my $total = 1;
+	for (my $i = 0; $i < $_[1]; $i++) {
+		$total = $total * $_[0];
+	}
+	print "total is $total";
 }
 
 #now that everything is ready
