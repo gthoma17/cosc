@@ -3,7 +3,7 @@
 #DONE	2	Prime
 #DONE	3	Pi
 #DONE	4	Tax
-#	5	IdPassword
+#DONE	5	IdPassword
 #	6	Score
 #	7	FileSort
 #	8	Frequency
@@ -126,7 +126,14 @@ sub tax_helper {
 	&tax($income, $status, $residency);
 }
 sub idpassword_helper {
-	# body...
+	print "Please enter first name: ";
+	my $fname = <STDIN>;
+	print "Please enter last name: ";
+	my $lname = <STDIN>;
+	chomp($fname);
+	chomp($lname);
+
+	&idpassword($fname, $lname);
 }
 sub score_helper {
 	# body...
@@ -202,7 +209,6 @@ sub pi {
 	}
 	my $approx_pi = 4.0 * $correction;
 	print "Pi is approxomately $approx_pi (correction = $correction)";
-
 }
 sub tax {
 	my $income = $_[0];
@@ -245,6 +251,16 @@ sub tax {
 		my $tax = $income * $taxRate;
 		print "Taxes due: $tax";
 	}
+}
+sub idpassword {
+	my $fname = uc($_[0]);
+	my $lname = uc($_[1]);
+	
+	my $username = substr($fname, 0, 1).$lname;
+	my $password = substr($fname, 0, 1).substr($fname, -1, 1).substr($lname, 0, 3).length($fname).length($lname);
+
+	print "Username: $username\n";
+	print "Password: $password\n";
 }
 
 
