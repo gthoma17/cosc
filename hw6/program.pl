@@ -1,6 +1,6 @@
 #~~~~~~~~~~~TODO~~~~~~~~~~~
 #DONE	1	Quadratic
-#	2	Prime
+#DONE	2	Prime
 #	3	Pi
 #	4	Tax
 #	5	IdPassword
@@ -102,7 +102,10 @@ sub quadratic_helper {
 	&quadratic($A,$B,$C)
 }
 sub prime_helper {
-	# body...
+	print "Please enter a number: ";
+	my $num = <STDIN>;
+	chomp($num)
+	&prime($num)
 }
 sub pi_helper {
 	# body...
@@ -156,6 +159,21 @@ sub quadratic {
 		print (($B * -1) - sqrt((($B*$B)-(4*$A*$C)))) / (2*$A);
 	} else {
 		print "No solutions exist...";
+	}
+}
+sub prime {
+	my $num = $_[0];
+	my $isPrime = 1;
+	for (my $i = 2; $i < $num; $i++) {
+		if (!($num % $i)) { #if no remainder, number isn't prime
+			$isPrime = 0;
+			last;
+		}
+	}
+	if ($isPrime) {
+		print "$num is prime"
+	} else{
+		print "$num is not prime"
 	}
 }
 
