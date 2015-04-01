@@ -1,5 +1,5 @@
 #~~~~~~~~~~~TODO~~~~~~~~~~~
-#	1	Quadratic
+#DONE	1	Quadratic
 #	2	Prime
 #	3	Pi
 #	4	Tax
@@ -19,7 +19,7 @@
 
 sub main{
 	my $menu = 
-	"Please choose a selection:
+	"\nPlease choose a selection:
 	1	Quadratic
 	2	Prime
 	3	Pi
@@ -88,7 +88,18 @@ sub main{
 }
 
 sub quadratic_helper {
-	# body...
+	#get parameters
+	print "Please enter A: ";
+	my $A = <STDIN>;
+	print "Please enter B: ";
+	my $B = <STDIN>;
+	print "Please enter C: ";
+	my $C = <STDIN>;
+	chomp($A);
+	chomp($B);
+	chomp($C);
+
+	&quadratic($A,$B,$C)
 }
 sub prime_helper {
 	# body...
@@ -133,7 +144,20 @@ sub whitespace_areacode_helper {
 	# body...
 }
 
+sub quadratic {
+	my $A = $_[0];
+	my $B = $_[1];
+	my $C = $_[2];
 
+	if ((($B*$B)-(4*$A*$C)) >= 0) {
+		print "Solution 1: ";
+		print (($B * -1) + sqrt((($B*$B)-(4*$A*$C)))) / (2*$A);
+		print "Solution 2: ";
+		print (($B * -1) - sqrt((($B*$B)-(4*$A*$C)))) / (2*$A);
+	} else {
+		print "No solutions exist...";
+	}
+}
 
 
 #now that everything is ready
