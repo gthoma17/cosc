@@ -4,7 +4,7 @@
 #DONE	3	Pi
 #DONE	4	Tax
 #DONE	5	IdPassword
-#	6	Score
+#DONE	6	Score
 #	7	FileSort
 #	8	Frequency
 #	9	Power
@@ -136,7 +136,7 @@ sub idpassword_helper {
 	&idpassword($fname, $lname);
 }
 sub score_helper {
-	# body...
+	&score;
 }
 sub filesort_helper {
 	# body...
@@ -262,7 +262,48 @@ sub idpassword {
 	print "Username: $username\n";
 	print "Password: $password\n";
 }
+sub score {
+	my $thisLine;
+	my $thisName;
+	my $thisScore;
+	my $minName;
+	my $minScore;
+	my $maxName;
+	my $maxScore;
+	my $runningTotal = 0;
+	my $numScores = 0;
 
+	$message = "Enter name & score separated by a space, or 'q' to quit: ";
+	print "$message";
+	$thisLine = <STDIN>;
+	chomp($thisLine);
+
+
+	while($thisLine ne "q" and $thisLine ne "Q"){
+		my @this_arr = split(/ /, $thisLine);
+		$thisName = @this_arr[0];
+		$thisScore = @this_arr[1];
+		if (!defined($minScore) or $thisScore < $minScore) {
+			$minScore = $thisScore;
+			$minName = $thisName;
+		}
+		if (!defined($maxScore) or $thisScore > $maxScore) {
+			$maxScore = $thisScore;
+			$maxName = $thisName;
+		}
+
+		$runningTotal = $runningTotal + $thisScore;
+		$numScores++;
+
+		print "$message";
+		$thisLine = <STDIN>;
+		chomp($thisLine);
+	}
+	print "Highest score: $maxScore \t Held by: $maxName\n";
+	print "Lowest  score: $minScore \t Held by: $minName\n";
+	my $average = $runningTotal / $numScores;
+	print "Average score: $average"
+}
 
 #now that everything is ready
 #lets get this party started
