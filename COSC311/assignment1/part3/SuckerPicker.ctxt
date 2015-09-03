@@ -1,0 +1,20 @@
+#BlueJ class context
+comment0.params=
+comment0.target=SuckerPicker()
+comment1.params=n\ s\ k
+comment1.target=SuckerPicker(int,\ int,\ int)
+comment2.params=num
+comment2.target=void\ add(int)
+comment3.params=prev
+comment3.target=void\ delNext(SuckerPicker.node)
+comment4.params=
+comment4.target=void\ makeCircle()
+comment5.params=
+comment5.target=void\ clearList()
+comment6.params=num
+comment6.target=void\ populateList(int)
+comment7.params=
+comment7.target=java.lang.String\ toString()
+comment8.params=num\ start\ move
+comment8.target=void\ runSim(int,\ int,\ int)
+numComments=9

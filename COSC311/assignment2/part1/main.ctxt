@@ -1,0 +1,12 @@
+#BlueJ class context
+comment0.params=input
+comment0.target=int\ evaluate(java.lang.String)
+comment1.params=token
+comment1.target=boolean\ isNumber(java.lang.String)
+comment2.params=operator\ leftOp\ rightOp
+comment2.target=int\ evaluate(char,\ int,\ int)
+comment3.params=
+comment3.target=void\ displayMenu()
+comment4.params=args
+comment4.target=void\ main(java.lang.String[])
+numComments=5

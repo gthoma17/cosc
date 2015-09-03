@@ -1,0 +1,83 @@
+Class documentation
+<---- javadoc command: ---->
+C:\Program Files\Java\jdk1.7.0_45\bin\javadoc.exe
+-author
+-version
+-nodeprecated
+-package
+-noindex
+-notree
+-nohelp
+-nonavbar
+-source
+1.7
+-classpath
+Z:\Program Files (x86)\BlueJ\lib\bluejcore.jar;Z:\Program Files (x86)\BlueJ\lib\junit-4.8.2.jar;C:\Users\Greg\Documents\GitHub\COSC311\assignment1\part1
+-d
+C:\Users\Greg\Documents\GitHub\COSC311\assignment1\part1\doc
+-encoding
+UTF-8
+-charset
+UTF-8
+-docletpath
+Z:\Program Files (x86)\BlueJ\lib\bjdoclet.jar
+-doclet
+bluej.doclet.doclets.formats.html.HtmlDoclet
+C:\Users\Greg\Documents\GitHub\COSC311\assignment1\part1\BooksCustomers.java
+<---- end of javadoc command ---->
+Loading source file C:\Users\Greg\Documents\GitHub\COSC311\assignment1\part1\BooksCustomers.java...
+C:\Users\Greg\Documents\GitHub\COSC311\assignment1\part1\BooksCustomers.java:45: error: unclosed string literal
+            String toReturn = String.format("Book: %-20s \n
+                                            ^
+C:\Users\Greg\Documents\GitHub\COSC311\assignment1\part1\BooksCustomers.java:46: error: ';' expected
+											 --Price: %-6.2f \n
+											   ^
+C:\Users\Greg\Documents\GitHub\COSC311\assignment1\part1\BooksCustomers.java:46: error: illegal start of expression
+											 --Price: %-6.2f \n
+											          ^
+C:\Users\Greg\Documents\GitHub\COSC311\assignment1\part1\BooksCustomers.java:46: error: illegal character: \92
+											 --Price: %-6.2f \n
+											                 ^
+C:\Users\Greg\Documents\GitHub\COSC311\assignment1\part1\BooksCustomers.java:47: error: ';' expected
+											 --Sold : %-8d \n
+											   ^
+C:\Users\Greg\Documents\GitHub\COSC311\assignment1\part1\BooksCustomers.java:47: error: illegal start of expression
+											 --Sold : %-8d \n
+											          ^
+C:\Users\Greg\Documents\GitHub\COSC311\assignment1\part1\BooksCustomers.java:47: error: illegal character: \92
+											 --Sold : %-8d \n
+											               ^
+C:\Users\Greg\Documents\GitHub\COSC311\assignment1\part1\BooksCustomers.java:48: error: ';' expected
+											 --Waiting List:\n"
+											   ^
+C:\Users\Greg\Documents\GitHub\COSC311\assignment1\part1\BooksCustomers.java:48: error: ';' expected
+											 --Waiting List:\n"
+											               ^
+C:\Users\Greg\Documents\GitHub\COSC311\assignment1\part1\BooksCustomers.java:48: error: illegal character: \92
+											 --Waiting List:\n"
+											                ^
+C:\Users\Greg\Documents\GitHub\COSC311\assignment1\part1\BooksCustomers.java:48: error: unclosed string literal
+											 --Waiting List:\n"
+											                  ^
+C:\Users\Greg\Documents\GitHub\COSC311\assignment1\part1\BooksCustomers.java:48: error: not a statement
+											 --Waiting List:\n"
+											                 ^
+C:\Users\Greg\Documents\GitHub\COSC311\assignment1\part1\BooksCustomers.java:49: error: not a statement
+											 , title, price, sold);
+											   ^
+C:\Users\Greg\Documents\GitHub\COSC311\assignment1\part1\BooksCustomers.java:49: error: ';' expected
+											 , title, price, sold);
+											        ^
+C:\Users\Greg\Documents\GitHub\COSC311\assignment1\part1\BooksCustomers.java:49: error: not a statement
+											 , title, price, sold);
+											          ^
+C:\Users\Greg\Documents\GitHub\COSC311\assignment1\part1\BooksCustomers.java:49: error: ';' expected
+											 , title, price, sold);
+											               ^
+C:\Users\Greg\Documents\GitHub\COSC311\assignment1\part1\BooksCustomers.java:49: error: not a statement
+											 , title, price, sold);
+											                 ^
+C:\Users\Greg\Documents\GitHub\COSC311\assignment1\part1\BooksCustomers.java:49: error: ';' expected
+											 , title, price, sold);
+											                     ^
+18 errors

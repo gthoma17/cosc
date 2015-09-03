@@ -1,0 +1,14 @@
+#BlueJ class context
+comment0.params=rows\ cols\ startRow\ startCol
+comment0.target=knightSolver(int,\ int,\ int,\ int)
+comment1.params=
+comment1.target=void\ solve()
+comment2.params=row\ col\ currNum
+comment2.target=void\ solve(int,\ int,\ int)
+comment3.params=
+comment3.target=boolean\ isSolved()
+comment4.params=row\ col
+comment4.target=boolean\ isValid(int,\ int)
+comment5.params=
+comment5.target=void\ printBoard()
+numComments=6

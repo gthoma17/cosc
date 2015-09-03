@@ -1,0 +1,6 @@
+#BlueJ class context
+comment0.params=wall\ row\ col
+comment0.target=tile(boolean,\ int,\ int)
+comment1.params=
+comment1.target=boolean\ isWall()
+numComments=2

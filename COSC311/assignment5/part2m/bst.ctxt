@@ -1,0 +1,18 @@
+#BlueJ class context
+comment0.params=
+comment0.target=bst()
+comment1.params=n\ seed
+comment1.target=bst(int,\ long)
+comment2.params=
+comment2.target=int\ count()
+comment3.params=
+comment3.target=int\ height()
+comment4.params=data
+comment4.target=boolean\ insert(int)
+comment5.params=data
+comment5.target=boolean\ search(int)
+comment6.params=temp
+comment6.target=int\ count(bst.node)
+comment7.params=temp
+comment7.target=int\ height(bst.node)
+numComments=8
